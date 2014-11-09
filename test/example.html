@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Test Page</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <script type="application/javascript" src="jquery.js"></script>
+    <script type="application/javascript" src="../request.js"></script>
+</head>
+<body>
+<script type="application/javascript">
+    $("body").on('click', "#testBtn", function(){
+        $("#result").empty();
+
+        var url = "/api/hostname";
+        function onSuccess(data,textStatus,jqXHR){
+            var code =jqXHR.status;
+            if(code==202){
+                $("#result").html("Success. Server returned code: "+code);
+            } else {
+                $("#result").html("Fail. Server returned code: "+code);
+            }
+            $("#textDiv").html("Test it again: ");
+        }
+        function onFail(){
+            $("#result").html("<h2> Hups, something went wrong... Sorry.</h2>");
+        }
+        doPost(url,"",onSuccess,onFail);
+    });
+</script>
+    <h1>Test</h1>
+    <div id="textDiv">Begin test: </div>
+    <button id="testBtn" class=" btn btn-danger">Run</button>
+    <div id="result"></div>
+</body>
+</html>
+
